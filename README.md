@@ -24,7 +24,7 @@
 | **Бэкенд** | Python 3.10+, FastAPI, Uvicorn |
 | **Поиск** | Elasticsearch 8.x |
 | **Кеш** | Redis |
-| **БД** | PostgreSQL (опционально) |
+| **БД** | PostgreSQL |
 | **Контейнеризация** | Docker, Docker Compose |
 | **Документация API** | OpenAPI 3.0 (Swagger UI) |
 
