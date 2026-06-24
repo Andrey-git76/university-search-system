@@ -1,0 +1,17 @@
+.app {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .app {
+    width: min(1400px, 100%);
+  }
+}
