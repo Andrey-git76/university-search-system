@@ -27,6 +27,9 @@
 | **БД** | PostgreSQL |
 | **Контейнеризация** | Docker, Docker Compose |
 | **Документация API** | OpenAPI 3.0 (Swagger UI) |
+| **Фронтенд** | React, TypeScript, Vite, Nginx |
+| **Мониторинг** | Prometheus, Grafana |
+| **CI/CD** | GitHub Actions |
 
 ---
 
@@ -43,46 +46,47 @@ cd university-search-system
 
 ### 2. Запуск инфраструктуры (Docker)
 
-Запускает **Elasticsearch**, **Redis** и **PostgreSQL** одной командой.
+Запускает все сервисы одной командой:
+
+- **Бэкенд** (FastAPI)
+- **Фронтенд** (React + Nginx)
+- **Elasticsearch** (поисковый движок)
+- **Redis** (кеширование)
+- **PostgreSQL** (база данных)
+- **Prometheus** (сбор метрик)
+- **Grafana** (визуализация метрик)
 
 ```bash
 docker-compose up -d
-```
 
 **Проверка:** Открой в браузере http://localhost:9200 — должен прийти JSON-ответ от Elasticsearch.
 
-### 3. Настройка и запуск бэкенда
+### 3. Настройка и запуск 
 
-```bash
-# Перейти в папку бэкенда
-cd backend
-
-# Создать виртуальное окружение
-python -m venv venv
-
-# Активировать окружение
-# Для Windows:
-venv\Scripts\activate
-# Для macOS/Linux:
-source venv/bin/activate
-
-# Установить зависимости
-pip install -r requirements.txt
-
-# Запустить сервер разработки
-uvicorn app.main:app --reload
-```
+# Пересобрать и запустить после изменений
+docker-compose up -d --build
+# Посмотреть логи всех сервисов
+docker-compose logs -f
+# Посмотреть логи конкретного сервиса (например, бэкенда)
+docker-compose logs -f backend
+# Перезапустить все сервисы
+docker-compose restart
+# Остановить все контейнеры
+docker-compose down
+# Остановить и удалить данные (VOLUMES)
+docker-compose down -v
 
 ### 4. Проверка работы
 
-Сервис	                             Адрес
-Фронтенд	                           http://localhost:3000
-SwaggerUI (документация API)	       http://localhost:8000/docs
-ReDoc	                               http://localhost:8000/redoc
-Health Check	                       http://localhost:8000/health
-Elasticsearch	                       http://localhost:9200
-Prometheus	                         http://localhost:9090
-Grafana	                             http://localhost:3001
+| Сервис | Адрес |
+| :--- | :--- |
+| **Фронтенд** | http://localhost:3000 |
+| **Swagger UI (документация API)** | http://localhost:8000/docs |
+| **ReDoc** | http://localhost:8000/redoc |
+| **Health Check** | http://localhost:8000/health |
+| **Elasticsearch** | http://localhost:9200 |
+| **Prometheus** | http://localhost:9090 |
+| **Grafana** | http://localhost:3001 |
 
 _______________________________________________________________________________________________________________________________________________________________________________________________
 
