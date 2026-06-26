@@ -58,8 +58,16 @@ cd university-search-system
 
 ```bash
 docker-compose up -d
+```
+**Проверка:** Открой в браузере:
 
-**Проверка:** Открой в браузере http://localhost:9200 — должен прийти JSON-ответ от Elasticsearch.
+| Сервис | Адрес | Что должно быть |
+| :--- | :--- | :--- |
+| **Elasticsearch** | http://localhost:9200 | JSON-ответ с версией |
+| **Swagger UI** | http://localhost:8000/docs | Документация API |
+| **Фронтенд** | http://localhost:3000 | Интерфейс поиска |
+| **Grafana** | http://localhost:3001 | Страница входа (admin/admin) |
+| **Prometheus** | http://localhost:9090 | Веб-интерфейс метрик |
 
 ### 3. Настройка и запуск 
 
