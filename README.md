@@ -75,11 +75,14 @@ uvicorn app.main:app --reload
 
 ### 4. Проверка работы
 
-После запуска сервер будет доступен по адресу:
-
-- **Swagger UI (документация API)**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-- **Health Check**: http://localhost:8000/health
+Сервис	                             Адрес
+Фронтенд	                           http://localhost:3000
+SwaggerUI (документация API)	       http://localhost:8000/docs
+ReDoc	                               http://localhost:8000/redoc
+Health Check	                       http://localhost:8000/health
+Elasticsearch	                       http://localhost:9200
+Prometheus	                         http://localhost:9090
+Grafana	                             http://localhost:3001
 
 _______________________________________________________________________________________________________________________________________________________________________________________________
 
