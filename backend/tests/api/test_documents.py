@@ -102,6 +102,50 @@ class TestDocumentsUpload:
         assert len(chunks) == data["chunks_count"]
 
     @patch("app.api.v1.endpoints.documents.IndexManager")
+    def test_upload_success_rare_fonts_pdf(self, MockIndexer, api_client, rare_fonts_pdf_bytes):
+        """QA-03: загрузка PDF с нестандартными шрифтами."""
+        mock_indexer = AsyncMock()
+        mock_indexer.index_chunks = AsyncMock()
+        MockIndexer.return_value = mock_indexer
+
+        response = api_client.post(
+            "/api/v1/documents/upload",
+            files={"file": ("rare_fonts.pdf", rare_fonts_pdf_bytes, "application/pdf")},
+        )
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["status"] == "indexed"
+        assert data["file_name"] == "rare_fonts.pdf"
+        assert data["chunks_count"] > 0
+
+    @patch("app.api.v1.endpoints.documents.IndexManager")
+    def test_upload_success_rare_fonts_docx(
+        self, MockIndexer, api_client, rare_fonts_docx_bytes
+    ):
+        """QA-03: загрузка DOCX с нестандартными шрифтами."""
+        mock_indexer = AsyncMock()
+        mock_indexer.index_chunks = AsyncMock()
+        MockIndexer.return_value = mock_indexer
+
+        response = api_client.post(
+            "/api/v1/documents/upload",
+            files={
+                "file": (
+                    "rare_fonts.docx",
+                    rare_fonts_docx_bytes,
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                )
+            },
+        )
+
+        assert response.status_code == 200
+        data = response.json()
+        assert data["status"] == "indexed"
+        assert data["file_name"] == "rare_fonts.docx"
+        assert data["chunks_count"] > 0
+
+    @patch("app.api.v1.endpoints.documents.IndexManager")
     def test_upload_empty_docx_returns_zero_chunks(
         self, MockIndexer, api_client, empty_docx_bytes
     ):

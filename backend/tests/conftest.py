@@ -4,11 +4,18 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 
 FIXTURES_DIR = Path(__file__).parent / "fixtures"
+MAX_FILE_SIZE_MB = 20
 
 
 @pytest.fixture
 def fixtures_dir() -> Path:
     return FIXTURES_DIR
+
+
+def make_oversized_pdf_bytes(size_mb: int = MAX_FILE_SIZE_MB + 1) -> bytes:
+    """Сгенерировать PDF-подобный файл больше лимита загрузки (без файла в репозитории)."""
+    payload_size = size_mb * 1024 * 1024 - len(b"%PDF-1.4\n")
+    return b"%PDF-1.4\n" + b"0" * payload_size
 
 
 def read_fixture(name: str) -> bytes:
@@ -37,12 +44,21 @@ def empty_docx_bytes(fixtures_dir) -> bytes:
 
 
 @pytest.fixture
+def rare_fonts_pdf_bytes() -> bytes:
+    """QA-03: PDF с нестандартными шрифтами и спецсимволами."""
+    return read_fixture("rare_fonts.pdf")
+
+
+@pytest.fixture
+def rare_fonts_docx_bytes() -> bytes:
+    """QA-03: DOCX с нестандартными шрифтами и спецсимволами."""
+    return read_fixture("rare_fonts.docx")
+
+
+@pytest.fixture
 def oversized_pdf_bytes() -> bytes:
     """Файл > 20 МБ для проверки лимита размера (валидация до парсинга)."""
-    fixtures_path = FIXTURES_DIR / "over_20mb.pdf"
-    if fixtures_path.exists():
-        return fixtures_path.read_bytes()
-    return b"%PDF-1.4\n" + b"0" * (21 * 1024 * 1024)
+    return make_oversized_pdf_bytes()
 
 
 @pytest.fixture

@@ -12,4 +12,8 @@ venv/
 htmlcov/
 *.log
 .DS_Store
+tests/fixtures/over_20mb.pdf
+tests/reports/
 !tests/fixtures/.gitkeep
+*Zone.Identifier
+*.Identifier

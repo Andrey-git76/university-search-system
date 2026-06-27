@@ -24,6 +24,22 @@ class TestDocumentParserPdf:
         with pytest.raises(Exception, match=r"(?i)pdf"):
             await DocumentParser.parse_pdf(content)
 
+    async def test_parse_rare_fonts_pdf_extracts_special_symbols(self, rare_fonts_pdf_bytes):
+        """QA-03: парсинг PDF с нестандартными шрифтами и символами."""
+        pages = await DocumentParser.parse_pdf(rare_fonts_pdf_bytes)
+
+        assert len(pages) >= 1
+        full_text = " ".join(p["text"] for p in pages)
+        assert "нестандартными шрифтами" in full_text
+        assert any(symbol in full_text for symbol in ("∑", "α", "ї", "€"))
+
+    async def test_parse_rare_fonts_pdf_produces_indexable_chunks(self, rare_fonts_pdf_bytes):
+        pages = await DocumentParser.parse_pdf(rare_fonts_pdf_bytes)
+        chunks = DocumentParser.chunk_pages(pages, chunk_size=200, overlap=20)
+
+        assert len(chunks) >= 1
+        assert all(chunk["text"].strip() for chunk in chunks)
+
 
 @pytest.mark.asyncio
 class TestDocumentParserDocx:
@@ -40,6 +56,16 @@ class TestDocumentParserDocx:
         pages = await DocumentParser.parse_docx(empty_docx_bytes)
         assert len(pages) == 1
         assert pages[0]["text"] == ""
+
+    async def test_parse_rare_fonts_docx_extracts_special_symbols(self, rare_fonts_docx_bytes):
+        """QA-03: парсинг DOCX с нестандартными шрифтами и символами."""
+        pages = await DocumentParser.parse_docx(rare_fonts_docx_bytes)
+
+        assert len(pages) == 1
+        text = pages[0]["text"]
+        assert "нестандартными шрифтами" in text
+        assert any(symbol in text for symbol in ("∑", "α", "ї", "€"))
+        assert any(font in text for font in ("Cambria Math", "Segoe UI Symbol"))
 
 
 @pytest.mark.asyncio

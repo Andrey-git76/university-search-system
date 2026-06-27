@@ -1,0 +1,12 @@
+[
+  {"query": "Москва", "expected_file": "valid.pdf"},
+  {"query": "Кремль", "expected_file": "valid.pdf"},
+  {"query": "МГУ", "expected_file": "valid.pdf"},
+  {"query": "Ломоносова", "expected_file": "valid.pdf"},
+  {"query": "ЮНЕСКО", "expected_file": "valid.pdf"},
+  {"query": "географическое положение", "expected_file": "valid.pdf"},
+  {"query": "научно-образовательный", "expected_file": "valid.pdf"},
+  {"query": "нестандартными шрифтами", "expected_file": "rare_fonts.pdf"},
+  {"query": "греческий алфавит", "expected_file": "rare_fonts.pdf"},
+  {"query": "столица", "expected_file": "valid.docx"}
+]
