@@ -1,18 +1,5 @@
 # QA-тестирование — University Search System
 
-Документация по требованиям QA из задания на учебную практику.
-
-## Статус требований
-
-| ID | Требование | Статус | Где реализовано |
-| :--- | :--- | :--- | :--- |
-| **QA-01** | Юнит-тесты backend (pytest), покрытие ≥ 50% | ✅ | `tests/unit/`, `tests/api/`, `pytest.ini` (`--cov-fail-under=50`) |
-| **QA-02** | E2E-тесты (Playwright): загрузка → индексация → поиск | ✅ | `tests/e2e/` |
-| **QA-03** | Набор тестовых документов | ✅ | `tests/fixtures/` (см. `fixtures/README.md`) |
-| **QA-04** | Нагрузочные тесты, 50 пользователей, отчёт по времени отклика | ✅ | `tests/load/` |
-| **QA-05** | Precision@3 для 10 эталонных запросов, таблица результатов | ✅ | `tests/evaluation/` |
-| QA-06 | Руководство пользователя | — | Не входит в текущую задачу |
-
 ## Быстрый старт
 
 ```bash
@@ -82,7 +69,7 @@ cd backend
 python -m tests.evaluation.evaluate_precision
 ```
 
-Скрипт загружает эталонные документы (`valid.pdf`, `valid.docx`, `rare_fonts.pdf`), выполняет 10 запросов из `ground_truth.json` и формирует таблицу в `tests/reports/precision_at_3.md`.
+Скрипт загружает документы, выполняет 10 запросов из `ground_truth.json` и формирует таблицу в `tests/reports/precision_at_3.md`.
 
 Через pytest:
 
@@ -103,17 +90,6 @@ tests/
 ├── helpers/          # Проверка доступности стенда
 └── reports/          # Генерируемые отчёты (gitignore)
 ```
-
-## QA-03 — состав фикстур
-
-| Категория | Файлы |
-| :--- | :--- |
-| Корректные PDF/DOCX | `valid.pdf`, `valid.docx` |
-| Пустые | `empty.pdf`, `empty.docx` |
-| Битое форматирование | `corrupted.pdf` |
-| Нестандартные шрифты | `rare_fonts.pdf`, `rare_fonts.docx` |
-| Неверный формат | `wrong_format.txt` |
-| Превышение 20 МБ | генерируется в `conftest.py` |
 
 ## Все маркеры pytest
 
