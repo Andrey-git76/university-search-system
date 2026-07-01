@@ -77,8 +77,8 @@ def _build_markdown_report(
 def run_load_test(
     host: str | None = None,
     users: int = 50,
-    spawn_rate: int = 50,
-    duration: str = "30s",
+    spawn_rate: int = 2,
+    duration: str = "5m",
 ) -> int:
     host = host or API_URL
     if not is_api_available():
@@ -128,8 +128,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="QA-04 load test runner")
     parser.add_argument("--host", default=os.getenv("QA_API_URL", API_URL))
     parser.add_argument("--users", type=int, default=50)
-    parser.add_argument("--spawn-rate", type=int, default=50)
-    parser.add_argument("--duration", default="30s")
+    parser.add_argument("--spawn-rate", type=int, default=2)
+    parser.add_argument("--duration", default="5m")
     args = parser.parse_args()
     return run_load_test(args.host, args.users, args.spawn_rate, args.duration)
 

@@ -15,5 +15,5 @@ def require_load_stack():
 
 
 def test_search_load_50_users(require_load_stack):
-    exit_code = run_load_test(users=50, spawn_rate=50, duration="15s")
+    exit_code = run_load_test(users=50, spawn_rate=2, duration="5m")
     assert exit_code == 0
