@@ -34,11 +34,17 @@ class TestDocumentsUpload:
         assert response.status_code == 400
         assert "No text could be extracted" in response.json()["detail"]
 
-    def test_upload_rejects_oversized_file(self, api_client, oversized_pdf_bytes):
-        response = api_client.post(
-            "/api/v1/documents/upload",
-            files={"file": ("huge.pdf", oversized_pdf_bytes, "application/pdf")},
-        )
+    def test_upload_rejects_oversized_file(self, api_client):
+        """Загрузка файла размером больше лимита"""
+        # Генерируем файл размером 2 КБ (это быстро передаётся)
+        file_content = b"0" * (2 * 1024)
+
+        # Устанавливаем лимит в 1 КБ (меньше, чем файл)
+        with patch('app.api.v1.endpoints.documents.settings.MAX_FILE_SIZE_MB', 0.001):
+            response = api_client.post(
+                "/api/v1/documents/upload",
+                files={"file": ("huge.pdf", file_content, "application/pdf")},
+            )
 
         assert response.status_code == 400
         assert "maximum size" in response.json()["detail"].lower()
@@ -103,7 +109,7 @@ class TestDocumentsUpload:
 
     @patch("app.api.v1.endpoints.documents.IndexManager")
     def test_upload_success_rare_fonts_pdf(self, MockIndexer, api_client, rare_fonts_pdf_bytes):
-        """QA-03: загрузка PDF с нестандартными шрифтами."""
+        """Загрузка PDF с нестандартными шрифтами."""
         mock_indexer = AsyncMock()
         mock_indexer.index_chunks = AsyncMock()
         MockIndexer.return_value = mock_indexer
@@ -123,7 +129,7 @@ class TestDocumentsUpload:
     def test_upload_success_rare_fonts_docx(
         self, MockIndexer, api_client, rare_fonts_docx_bytes
     ):
-        """QA-03: загрузка DOCX с нестандартными шрифтами."""
+        """Загрузка DOCX с нестандартными шрифтами."""
         mock_indexer = AsyncMock()
         mock_indexer.index_chunks = AsyncMock()
         MockIndexer.return_value = mock_indexer
@@ -149,7 +155,6 @@ class TestDocumentsUpload:
     def test_upload_empty_docx_returns_zero_chunks(
         self, MockIndexer, api_client, empty_docx_bytes
     ):
-        """Текущее поведение API: пустой DOCX не отклоняется, но чанков нет."""
         mock_indexer = AsyncMock()
         mock_indexer.index_chunks = AsyncMock()
         MockIndexer.return_value = mock_indexer

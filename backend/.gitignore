@@ -17,3 +17,4 @@ tests/reports/
 !tests/fixtures/.gitkeep
 *Zone.Identifier
 *.Identifier
+.coverage.*

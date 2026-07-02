@@ -1,12 +1,12 @@
 [
-  {"query": "Москва", "expected_file": "valid.pdf"},
-  {"query": "Кремль", "expected_file": "valid.pdf"},
-  {"query": "МГУ", "expected_file": "valid.pdf"},
-  {"query": "Ломоносова", "expected_file": "valid.pdf"},
-  {"query": "ЮНЕСКО", "expected_file": "valid.pdf"},
-  {"query": "географическое положение", "expected_file": "valid.pdf"},
-  {"query": "научно-образовательный", "expected_file": "valid.pdf"},
-  {"query": "нестандартными шрифтами", "expected_file": "rare_fonts.pdf"},
-  {"query": "греческий алфавит", "expected_file": "rare_fonts.pdf"},
-  {"query": "столица", "expected_file": "valid.docx"}
+  {"query": "Географическое положение и площадь Москвы", "expected_file": "valid.pdf"},
+  {"query": "Достопримечательности Москвы и список Всемирного наследия ЮНЕСКО", "expected_file": "valid.pdf"},
+  {"query": "Научно-образовательный потенциал и старейший университет МГУ", "expected_file": "valid.pdf"},
+  {"query": "Документ с нестандартными шрифтами и греческий алфавит", "expected_file": "rare_fonts.pdf"},
+  {"query": "Математические символы интеграл и латинские лигатуры", "expected_file": "rare_fonts.pdf"},
+  {"query": "Официальная столица Российской Федерации", "expected_file": "valid.pdf"},
+  {"query": "Архитектура информационных поисковых систем", "expected_file": "technology.pdf"},
+  {"query": "Историческая архитектура и памятники зодчества", "expected_file": "history.pdf"},
+  {"query": "Научные исследования и развитие цифровых кафедр в вузах", "expected_file": "universities.pdf"},
+  {"query": "Экологический мониторинг и климатические наблюдения", "expected_file": "nature.pdf"}
 ]

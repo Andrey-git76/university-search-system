@@ -48,7 +48,7 @@ pytest tests/e2e -m e2e --no-cov
 
 ```bash
 cd backend
-python -m tests.load.run_load_test --users 50 --spawn-rate 50 --duration 30s
+python -m tests.load.run_load_test --users 50 --spawn-rate 2 --duration 5m
 ```
 
 Или через pytest:
@@ -65,15 +65,8 @@ pytest tests/load -m load --no-cov
 ### QA-05 — Precision@3
 
 ```bash
+# Скрипт загружает документы, выполняет 10 запросов из `ground_truth.json` и формирует таблицу в `tests/reports/precision_at_3.md`.
 cd backend
-python -m tests.evaluation.evaluate_precision
-```
-
-Скрипт загружает документы, выполняет 10 запросов из `ground_truth.json` и формирует таблицу в `tests/reports/precision_at_3.md`.
-
-Через pytest:
-
-```bash
 pytest tests/evaluation -m evaluation --no-cov
 ```
 
